@@ -1,0 +1,11 @@
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if target not in nums:
+            return -1,-1
+        c=0
+        for i in range (len(nums)):
+            if nums[i] == target:
+                c+=1
+                a=i
+        return a-c+1,a
+        
