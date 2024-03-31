@@ -1,0 +1,27 @@
+class Solution:
+    def countSubarrays(self, nums: List[int], minK: int, maxK: int) -> int:
+        j = 0
+        ans = 0
+        while j <len(nums):
+            i = j
+            mi, ma =  -1, -1
+            while j<len(nums) and minK<= nums[j] <= maxK:
+                f = False
+                if nums[j] == minK:
+                    f = True
+                    mi = j
+
+                if nums[j] ==maxK:
+                    f = True
+                    ma = j
+                
+                if ma>=0 and mi>=0: 
+                    if (f):
+                        ans += min(ma, mi)-i+1 + j- max(mi,ma)
+                        
+                    else:
+
+                        ans += min(ma, mi)-i+1
+                j += 1
+            j += 1
+        return ans
