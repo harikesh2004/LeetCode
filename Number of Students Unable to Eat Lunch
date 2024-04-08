@@ -1,0 +1,15 @@
+class Solution:
+    def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        c = [0, 0]
+        for i in students:
+            c[i] += 1
+
+        a = len(sandwiches)
+        for i in sandwiches:
+            if c[i] == 0 or a==0:
+                break
+            c[i] -= 1
+            a -= 1
+        
+        return a
+        
