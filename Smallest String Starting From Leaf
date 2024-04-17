@@ -1,0 +1,19 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def smallestFromLeaf(self, root: Optional[TreeNode]) -> str:
+        def findSmall(root, curr, minStr):
+            if root:
+                curr = chr(ord('a')+root.val) + curr
+                if root.left==None and root.right==None: #found leafNode
+                    minStr[0] = min(curr, minStr[0])
+                findSmall(root.left, curr, minStr)
+                findSmall(root.right, curr, minStr)
+        ans = ['z'*8501]
+        findSmall(root, '', ans)
+        return ans[0]
+        
