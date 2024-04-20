@@ -1,0 +1,28 @@
+class Solution:
+    def findFarmland(self, land: List[List[int]]) -> List[List[int]]:
+        def dfs(i,j):
+            if i<0 or i>=n or j<0 or j>=m or land[i][j]!=1:
+                return [-1,-1]
+            land[i][j]=0
+            val1=i
+            val2=j
+            val=dfs(i,j+1)
+            if val1<val[0]:
+                val1=val[0]
+            if val2<val[1]:
+                val2=val[1]
+            va=dfs(i+1,j)
+            if val1<va[0]:
+                val1=va[0]
+            if val2<va[1]:
+                val2=va[1]
+            return [val1,val2]
+        a=[]
+        n=len(land)
+        m=len(land[0])
+        for i in range(n):
+            for j in range(m):
+                if land[i][j]==1:
+                    val=dfs(i,j)
+                    a.append([i,j,val[0],val[1]])
+        return a
