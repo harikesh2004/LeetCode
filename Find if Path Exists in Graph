@@ -1,0 +1,22 @@
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        d = defaultdict(list)
+        for u, v in edges:
+            d[u].append(v)
+            d[v].append(u)
+        q = deque([source])
+        seen = [0] * n
+        seen[source] = 1
+        while q:
+            node = q.popleft()
+            if node == destination:
+                return True
+            for nxt in d[node]:
+                if seen[nxt] == 1:
+                    continue
+                seen[nxt] = 1
+                q.append(nxt)
+        return False
+
+
+        
