@@ -1,0 +1,31 @@
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        q = deque( ['0000'] )
+        seen = set( ['0000'] )
+        dead = set(deadends)
+        res = -1
+        
+        if '0000' in dead: return res
+        
+        while q:
+            res += 1
+            for _ in range(len(q)):
+                cur = q.popleft()
+                
+                if cur == target:
+                    return res
+                
+                for i in range(4):
+                    n1, n2 = list(cur), list(cur)
+                    n1[i] = str( (int(n1[i]) + 1) % 10 )
+                    n2[i] = str( (int(n2[i]) - 1) % 10 )
+                    
+                    t1 = ''.join(n1)
+                    t2 = ''.join(n2)
+                    
+                    for t in [t1, t2]:
+                        if t not in seen and t not in dead:
+                            q.append(t)
+                            seen.add(t)
+							
+        return -1
