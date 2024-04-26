@@ -1,0 +1,23 @@
+class Solution:
+    def minFallingPathSum(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+
+
+        def findFirstAndSecondMin(row):
+            f, s = None, None
+            for i in range(n):
+                if not f or row[i] < f:
+                    f, s = row[i], f
+                elif not s or row[i] < s:
+                    s = row[i]
+            return f, s
+        
+        for row in range(1, n):
+            f, s = findFirstAndSecondMin(grid[row - 1])
+            for col in range(n):
+                if grid[row-1][col] == f:
+                    grid[row][col] += s
+                else:
+                    grid[row][col] += f
+        
+        return min(grid[-1])
