@@ -1,0 +1,17 @@
+class Solution:
+    def findRotateSteps(self, ring: str, key: str) -> int:
+        R,K = len(ring),len(key)
+        pos = {}
+        for i,c in enumerate(ring):
+            if c in key:
+                if c not in pos:
+                    pos[c] = []
+                pos[c] += [i]
+        curr = lambda r,p: min((r-p)%R, (p-r)%R)
+        next = lambda k,p: rotate(k+1,p) if k<K-1 else 0
+        total = lambda k,r,p: curr(r,p) + next(k,p) + 1
+        @cache
+        def rotate(k,r):
+            return min(total(k,r,p) for p in pos[key[k]])
+        return rotate(0,0)
+        
