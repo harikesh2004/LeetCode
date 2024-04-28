@@ -1,25 +1,29 @@
 class Solution:
     def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
-        graph = [[] for _ in range(n)]
-        for a, b in edges:
-            graph[a].append(b)
-            graph[b].append(a)
+        g = [[] for i in range(n)]
+        for e in edges:
+            g[e[0]] += [e[1]]
+            g[e[1]] += [e[0]]
+        
+        treeSize = [0] * n
+        dist = [0] * n
 
-        @cache
-        def dp (start, end):
-            val = 0
-            cnt = 1
-            for n in graph[end]:
-                if n != start:
-                    v, c = dp(end, n)
-                    val += (v + c)
-                    cnt += c
-            return val, cnt
+        def dfs(u, p):
+            dist[u] = 0
+            treeSize[u] = 1
+            for v in g[u]:
+                if v != p:
+                    dfs(v, u)
+                    treeSize[u] += treeSize[v]
+                    dist[u] += dist[v] + treeSize[v]
+        dfs(0, 0)
 
-        res = []
-        for i in range(n):
-            tmp = 0 
-            for j in graph[i]:
-                tmp += sum(dp(i,j))
-            res.append(tmp)
-        return res 
+        def util(u, p):
+            parentContribution = dist[p] - dist[u] - int(u != p) * treeSize[u]
+            dist[u] += parentContribution + (n - treeSize[u]) 
+            for v in g[u]:
+                if v != p:
+                    util(v, u)
+        util(0, 0)
+
+        return dist
