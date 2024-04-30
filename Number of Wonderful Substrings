@@ -1,0 +1,15 @@
+class Solution:
+    def wonderfulSubstrings(self, word: str) -> int:
+        n, mask, dict1, count = len(word), 0, defaultdict(int), 0 
+
+        dict1[0] = 1 
+
+        for i in word:
+            mask = mask^(1<<(ord(i)-ord("a")))
+            count += dict1[mask]
+            for i in range(10):
+                tmp = mask^(1<<i)
+                count += dict1[tmp]
+            dict1[mask] += 1 
+
+        return count 
