@@ -1,0 +1,26 @@
+class Solution:
+    def kthSmallestPrimeFraction(self, arr: List[int], k: int) -> List[int]:
+        n = len(arr)
+        def func(x):
+            i,j = 0,1 
+            count = a = b = 0
+            while max(i,j) < n:
+                if arr[i]/arr[j] <= x:
+                    count += (n-j)
+                    if a*arr[j] <= b*arr[i]:
+                        a,b = arr[i],arr[j]
+                    i += 1 
+                else:
+                    j += 1 
+            return [count,a,b]
+        low, high = 0, 1 
+        while low < high:
+            mid = (low+high)/2 
+            ans = func(mid)
+            if ans[0] < k:
+                low = mid 
+            elif ans[0] > k:
+                high = mid 
+            else:
+                return ans[1:]
+        return []
