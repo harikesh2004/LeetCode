@@ -1,0 +1,11 @@
+class Solution:
+    def largestLocal(self, grid: List[List[int]]) -> List[List[int]]:
+        res = []
+        for i in range(len(grid)-2):
+            res.append([]) 
+            for j in range(len(grid[0])-2):
+                max_val = max(
+                    grid[i][j:j+3]+grid[i+1][j:j+3]+grid[i+2][j:j+3] 
+                )
+                res[i].append(max_val)
+        return res
