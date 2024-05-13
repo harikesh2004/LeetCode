@@ -1,0 +1,23 @@
+class Solution:
+    def matrixScore(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        for row in range(m):
+            if grid[row][0] == 0:
+                for col in range(n):
+                    grid[row][col] = 1 if grid[row][col] == 0 else 0
+        for col in range(1, n):
+            ones = zeros = 0
+            for row in range(m):
+                if grid[row][col] == 0:
+                    zeros += 1
+                else:
+                    ones += 1
+            if zeros > ones:
+                for row in range(m):
+                    grid[row][col] = 1 if grid[row][col] == 0 else 0
+        ans = 0
+        for row in grid:
+            binary_string = ''.join(str(bit) for bit in row)
+            ans += int(binary_string, 2)
+        return ans
