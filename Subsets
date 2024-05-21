@@ -1,0 +1,13 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        q = deque()
+        q.append(([], -1))
+        while q:
+            curList, maxIdx = q.popleft()
+            res.append(curList)
+            for i in range(maxIdx+1, len(nums)):
+                newList = curList.copy()
+                newList.append(nums[i])
+                q.append((newList, i))
+        return res
