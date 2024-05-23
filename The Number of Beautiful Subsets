@@ -1,0 +1,13 @@
+class Solution:
+    def beautifulSubsets(self, nums: List[int], k: int) -> int:
+        def f(a, b, i):
+            if i < len(a):
+                result = f(a, b, i+1)
+                if a[i]-k not in b:
+                    result += f(a, b+[a[i]], i+1)
+
+                return result
+
+            return len(b) > 0
+        
+        return f(sorted(nums), [], 0)
