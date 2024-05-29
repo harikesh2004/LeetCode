@@ -1,0 +1,12 @@
+class Solution:
+    def numSteps(self, s: str) -> int:
+        a=int(s,2)
+        d=0
+        while(a!=1):
+            if a%2==0:
+                a=a//2
+                d+=1 
+            else:
+                a=a+1
+                d+=1 
+        return d
