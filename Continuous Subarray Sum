@@ -1,0 +1,21 @@
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        if not nums:
+            return False
+        
+        cache = {0:-1}
+        rem=0
+        
+        for i in range(len(nums)):
+            try:
+                rem = (rem+nums[i])%k
+            except ZeroDivisionError:
+                rem = rem+nums[i]
+                
+            if rem in cache:
+                if i-cache[rem]>1:
+                    return True
+            else:
+                cache[rem] = i
+            
+        return False
