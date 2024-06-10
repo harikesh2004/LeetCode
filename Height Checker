@@ -1,0 +1,8 @@
+class Solution:
+    def heightChecker(self, heights: List[int]) -> int:
+        h = sorted(heights)
+        ans = 0
+        for i in range(0, len(heights)):
+            if h[i] != heights[i]:
+                ans += 1
+        return ans
